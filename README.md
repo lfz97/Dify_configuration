@@ -52,7 +52,7 @@ beautifulsoup4==4.13.3
 
 ##### 5. 修改sandbox 允许访问的外部网络
 
-- sandbox的http请求通过SSRF_PROXY访问到外部站点。但是SSRF_PROXY是个http代理，不能代理其他协议，同时sanbox默认禁止直接访问外部网络。因此需要配置sandbox[...]
+- sandbox的http请求通过SSRF_PROXY访问到外部站点。但是SSRF_PROXY是个http代理，不能代理其他协议，同时sanbox默认禁止直接访问外部网络。因此需要配置sandbox可直接访问外部网络：
   
   - 编辑 **docker/docker-compose.yaml** 配置文件找到**sandbox**的配置，在**networks**处，添加default,如下：
   - *原配置*：
