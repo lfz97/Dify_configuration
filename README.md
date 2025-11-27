@@ -32,12 +32,16 @@ beautifulsoup4==4.13.3
 ## 2. 增加ssrf_proxy的目的端口访问范围
 
 - 移除 **docker/ssrf_proxy/squid.conf.template** 中以下行的注释，让ssrf_proxy可以访问除了443以外的https端口
-    `acl SSL_ports port 1025-65535   # Enable the configuration to resolve this issue: https://github.com/langgenius/dify/issues/12792`
+```text
+  acl SSL_ports port 1025-65535   # Enable the configuration to resolve this issue: https://github.com/langgenius/dify/issues/12792
+```
 
 ### 3. 将dify的 *HTTP 请求* 模块中的ssl verify去除，保证可以访问所有站点
 
 - 将 **docker/.env**文件中的以下参数修改为：
-    `HTTP_REQUEST_NODE_SSL_VERIFY=False` 使得*HTTP 请求*模块不验证目标SSL证书
+```text
+    HTTP_REQUEST_NODE_SSL_VERIFY=False #使得*HTTP 请求模块不验证目标SSL证书
+```
 
 #### 4. 修改sandbox的 syscall 解除系统调用的限制
 
@@ -70,15 +74,18 @@ beautifulsoup4==4.13.3
 ###### 6. 修改 PluginDaemon 的超时时间
 - 工作流中如果某节点是使用插件执行长阻塞操作，会报错 *PluginDaemonInternalServerError: killed by timeout* ，这是因为PluginDaemon运行插件默认超时时间过短，需[...]
 - 
-      `PLUGIN_MAX_EXECUTION_TIMEOUT=86400`
+  ```text
+  PLUGIN_MAX_EXECUTION_TIMEOUT=86400
+  ```
 
 ###### 7. 修改代码执行模块最大输出长度
 - 代码执行模块默认输出字符数量有限制，超过数量会报错，需要修改 **docker/.env** 配置增加输出长度，修改如下参数：
-
-      `CODE_MAX_STRING_LENGTH=16000000`
-      `CODE_MAX_STRING_ARRAY_LENGTH=300000`
-      `CODE_MAX_OBJECT_ARRAY_LENGTH=300000`
-      `CODE_MAX_NUMBER_ARRAY_LENGTH=300000`
+      ```text
+      CODE_MAX_STRING_LENGTH=16000000
+      CODE_MAX_STRING_ARRAY_LENGTH=300000
+      CODE_MAX_OBJECT_ARRAY_LENGTH=300000
+      CODE_MAX_NUMBER_ARRAY_LENGTH=300000
+      ```
 
 ###### 8. 修改工作流最长执行时间
 - 工作流默认只能执行1200秒，到时会抛异常*stopped by user*，需要修改 **/docker/.env** 配置，修改如下参数:
@@ -88,9 +95,10 @@ beautifulsoup4==4.13.3
 
 ###### 9. 修改Sandbox worker及代码执行模块最大执行时间
 - 由于代码执行模块依赖sandbox，而sandbox中单个worker的执行时间默认最大为15秒，超时后就会被强制kill，所以需要增加Sandbox worker最大执行时间。同时，��[...]
-
-      `SANDBOX_WORKER_TIMEOUT=7200`
-      `CODE_EXECUTION_READ_TIMEOUT=7200`
+      ```text
+      SANDBOX_WORKER_TIMEOUT=7200
+      CODE_EXECUTION_READ_TIMEOUT=7200
+      ```
 
 ###### 10. 修改工作流最大执行步数
 - 工作流默认最大步数500步，到时会抛异常*Max steps 500 reached.*，需要修改**docker/.env** 配置，修改如下参数:
