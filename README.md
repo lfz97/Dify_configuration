@@ -5,25 +5,25 @@ Dify 本地化部署的一些配置项参考
 
 - 导出pip的requirements文件，并将其中的内容复制进 **docker/volumes/sandbox/dependencies/python-requirements.txt** 文件中，如下:
   
-bcrypt==4.3.0
-certifi==2025.1.31
-cffi==1.17.1
-charset-normalizer==3.4.1
-cryptography==44.0.2
-idna==3.10
-ldap3==2.9.1
-msal==1.32.0
-ntlm-auth==1.5.0
-paramiko==3.5.1
-pyasn1==0.6.1
-pycparser==2.22
-pycryptodome==3.22.0
-PyJWT==2.10.1
-PyNaCl==1.5.0
-requests==2.32.3
-scapy==2.6.1
-urllib3==2.4.0
-beautifulsoup4==4.13.3
+`bcrypt==4.3.0`
+`certifi==2025.1.31`
+`cffi==1.17.1`
+`charset-normalizer==3.4.1`
+`cryptography==44.0.2`
+`idna==3.10`
+`ldap3==2.9.1`
+`msal==1.32.0`
+`ntlm-auth==1.5.0`
+`paramiko==3.5.1`
+`pyasn1==0.6.1`
+`pycparser==2.22`
+`pycryptodome==3.22.0`
+`PyJWT==2.10.1`
+`PyNaCl==1.5.0`
+`requests==2.32.3`
+`scapy==2.6.1`
+`urllib3==2.4.0`
+`beautifulsoup4==4.13.3`
 
 - 容器启动时会自动下载这些包到sandbox中
   
