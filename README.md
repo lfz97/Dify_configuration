@@ -74,7 +74,7 @@ beautifulsoup4==4.13.3
     ```
 
 ###### 6. 修改 PluginDaemon 的超时时间
-- 工作流中如果某节点是使用插件执行长阻塞操作，会报错 *PluginDaemonInternalServerError: killed by timeout* ，这是因为PluginDaemon运行插件默认超时时间过短，需[...]
+- 工作流中如果某节点是使用插件执行长阻塞操作，会报错 *PluginDaemonInternalServerError: killed by timeout* ，这是因为PluginDaemon运行插件默认超时时间过短，需要修改 **docker/.env** 配置，修改如下参数：
 - 
   ```text
   PLUGIN_MAX_EXECUTION_TIMEOUT=86400
@@ -96,7 +96,7 @@ beautifulsoup4==4.13.3
       `APP_MAX_EXECUTION_TIME=86400`
 
 ###### 9. 修改Sandbox worker及代码执行模块最大执行时间
-- 由于代码执行模块依赖sandbox，而sandbox中单个worker的执行时间默认最大为15秒，超时后就会被强制kill，所以需要增加Sandbox worker最大执行时间。同时，��[...]
+- 由于代码执行模块依赖sandbox，而sandbox中单个worker的执行时间默认最大为15秒，超时后就会被强制kill，所以需要增加Sandbox worker最大执行时间。同时，代码执行模块也有一个最大执行时间，默认为60秒，所以也需要增大代码执行模块的最大执行时间。需要修改 **docker/.env** 配置，同时修改如下两个参数：
       ```text
       SANDBOX_WORKER_TIMEOUT=7200
       CODE_EXECUTION_READ_TIMEOUT=7200
@@ -116,7 +116,7 @@ beautifulsoup4==4.13.3
       `PIP_MIRROR_URL=https://pypi.tuna.tsinghua.edu.cn/simple`
 
 ###### 13. 修改迭代模块在并行模式下最大的参数提交数量
-- 迭代模块在并行模式下，输入参数提交到线程池的数量有默认100的限制（数量计算公式为："输入数组长度×设置的并行数>100"），触发这个后会报错 "Ma[...]
+- 迭代模块在并行模式下，输入参数提交到线程池的数量有默认100的限制（数量计算公式为："输入数组长度×设置的并行数>100"），触发这个后会报错 "Max submit count 100 of workflow thread pool reached."，在提交大长度的array到迭代模块时很容易触发这个限制，因此需要调整**docker/.env**增加输入参数长度
       `MAX_SUBMIT_COUNT=50000` #注意，修改此属性会导致服务器资源压力增大，实际情况下要根据服务器配置调整此参数
 ###### 14. 修改API 服务 Server worker 数量，即 gevent worker 数量，公式：cpu 核心数 x 2 + 1
 - 提高性能，调整**docker/.env**以下字段：
